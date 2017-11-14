@@ -1,6 +1,7 @@
 """
 api.py
 """
+import math
 
 class cluster():
     def __init__(self, center, count, count_new_add, count_new_sub, distChange, label):
@@ -25,3 +26,20 @@ class fineCat():
     def __init__(self, catType, num_landmarks):
         self.catType = catType
         self.num_landmarks = num_landmarks
+
+# not too sure whats the meaning of this, it was in top.h
+def TOP_defDistance(defDist):
+    print(str(defDist))
+
+# not too sure whats the meaning of this, it was in top.h
+def TOP_findClosestTargets(k):
+    print(str(k))
+    return false
+
+# a, b are lists of doubles
+def distance_Euclidean(a, b):
+    total = 0.0
+    for i in range(0, a):
+        distance = a[i] - b[i]
+        total = total + distance * distance
+    return math.sqrt(total)
