@@ -3,6 +3,9 @@ api.py
 """
 import math
 
+"""
+ Structs and such
+"""
 class cluster():
     def __init__(self, center, count, count_new_add, count_new_sub, distChange, label):
         self.center = center
@@ -36,10 +39,31 @@ def TOP_findClosestTargets(k):
     print(str(k))
     return false
 
+"""
+ Helper Functions
+"""
 # a, b are lists of doubles
 def distance_Euclidean(a, b):
     total = 0.0
-    for i in range(0, a):
+    for i in a:
         distance = a[i] - b[i]
         total = total + distance * distance
     return math.sqrt(total)
+
+# add two vectors (lists)
+def plus_equal_vector(a, b):
+    for i in a:
+        a[i] = a[i] + b[i]
+    return a
+
+# subtract two vectors (lists)
+def subs_equal_vector(a, b):
+    for i in a:
+        a[i] = a[i] - b[i]
+    return a
+
+# scale a vector A by value D
+def scale_vector(a, d):
+    for i in a:
+        a[i] = a[i] * d
+    return a
