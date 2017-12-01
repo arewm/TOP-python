@@ -6,10 +6,6 @@ Test Case picked from
 source: https://gist.github.com/iandanforth/5862470
 http://pandoricweb.tumblr.com/post/8646701677/python-implementation-of-the-k-means-clustering
 """""
-
-#############################################################################
-# Full Imports
-
 import math
 import random
 plotly = False
