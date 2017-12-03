@@ -3,7 +3,7 @@
 ## Team Members
 - [Brian Clee](https://github.com/cleebp)
 - [Andrew McNamara](https://github.com/arewm)
-- [Esha Sherma]
+- [Esha Sharma](https://github.com/eshasharma)
 
 ## API
 Structs:
