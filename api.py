@@ -86,8 +86,9 @@ def estimateSpaceCost(Tghost,T,Q,useTset):
 # distributed_platform is a boolean variable
 # Figure 7 in TOP Paper
 def pickLandmarkDef(Budget,cat,L,M,T,Q,distributed_platform):
-    T_len=T.count
-    Q_len=Q.count
+    T_len=T.count # put cluster here
+    Q_len=Q.count  # put points here
+    d=Q[0].point.size()   # dimension of data used
     Tsqrt=math.sqrt(T_len)
     Qsqrt=math.sqrt(Q_len)
     if (cat==1):
@@ -103,15 +104,16 @@ def pickLandmarkDef(Budget,cat,L,M,T,Q,distributed_platform):
         if (Tsqrt<(0.01*Qsqrt)):
             useTset=True
         if (cat==2):
-            spaceNeeds=estimateSpaceCost(Tghost,T,Q,useTset)
+            spaceNeeds=1000 #estimateSpaceCost(Tghost,T,Q,useTset)
         else:
-            spaceNeeds = estimateSpaceCost(Qghost, T, Q, useTset)
+            spaceNeeds = 1000 #estimateSpaceCost(Qghost, T, Q, useTset)
         L=1
         if ((spaceNeeds>Budget) or (d<1000)):
             L=2
         if (cat == 4 or cat == 3):
-            spaceNeeds = estimateSpaceCost(TQghost, T, Q)
+            spaceNeeds = 1000 # estimateSpaceCost(TQghost, T, Q)
             L=1
             if ((spaceNeeds>Budget) or (d<1000)):
                 L=2
-        configure(Budget,cat,L,M,T,Q)
+        # do this later
+        #configure(Budget,cat,L,M,T,Q)
