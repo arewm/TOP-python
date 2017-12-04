@@ -67,3 +67,43 @@ def scale_vector(a, d):
     for i in a:
         a[i] = a[i] * d
     return a
+
+def maxLandmarks(Budget,cat,L,M,Tsqrt, int Qsqrt):
+
+def estimateSpaceCost(Tghost,T,Q,useTset):
+
+
+# Core function
+# Select and configure landmark definitions
+# determines which landmark is suitable for a problem instance
+# Parameters: Query set q, Target set T, dimensions of data d, Budget, Category cat
+# distributed_platform is a boolean variable
+# Figure 7 in TOP Paper
+def pickLandmarkDef(Budget,cat,L,M,T,Q,distributed_platform):
+    Tsqrt=math.sqrt(T)
+    Qsqrt=math.sqrt(Q)
+    if (cat==1):
+        L=1
+        if distributed_platform:
+            L=2
+        M=1
+        Nmax=maxLandmarks(Budget,cat,L,M,Tsqrt,Qsqrt)
+        if (Nmax<Qsqrt):
+            M=2
+        if (cat==2 or cat==3):
+            useTset=False
+        if (Tsqrt<(0.01*Qsqrt)):
+            useTset=True
+        if (cat==2):
+            spaceNeeds=estimateSpaceCost(Tghost,T,Q,useTset)
+        else:
+            spaceNeeds = estimateSpaceCost(Qghost, T, Q, useTset)
+        L=1
+        if ((spaceNeeds>Budget) or (d<1000)):
+            L=2
+        if (cat == 4 or cat == 3):
+            spaceNeeds = estimateSpaceCost(TQghost, T, Q)
+            L=1
+            if ((spaceNeeds>Budget) or (d<1000)):
+                L=2
+        configure(Budget,cat,L,M,T,Q)
