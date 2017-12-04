@@ -86,8 +86,10 @@ def estimateSpaceCost(Tghost,T,Q,useTset):
 # distributed_platform is a boolean variable
 # Figure 7 in TOP Paper
 def pickLandmarkDef(Budget,cat,L,M,T,Q,distributed_platform):
-    Tsqrt=math.sqrt(T)
-    Qsqrt=math.sqrt(Q)
+    T_len=T.count
+    Q_len=Q.count
+    Tsqrt=math.sqrt(T_len)
+    Qsqrt=math.sqrt(Q_len)
     if (cat==1):
         L=1
         if distributed_platform:
