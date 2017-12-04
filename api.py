@@ -68,10 +68,16 @@ def scale_vector(a, d):
         a[i] = a[i] * d
     return a
 
+"""
+ Definitions:
+"""
 def maxLandmarks(Budget,cat,L,M,Tsqrt, int Qsqrt):
+    maxL = 100
+    return maxL
 
 def estimateSpaceCost(Tghost,T,Q,useTset):
-
+    space = 1000
+    return 1000
 
 # Core function
 # Select and configure landmark definitions
