@@ -6,7 +6,7 @@ source: https://www.python.org/doc/essays/graphs/
 author: Guido van Rossum
 """""
 
-from api import TOP_defDistance
+from api import TOP_defDistance # Adding TOP function
 
 def find_shortest_path(graph, start, end, path=[]):
     """
@@ -23,7 +23,7 @@ def find_shortest_path(graph, start, end, path=[]):
         if node not in path:
             newpath = find_shortest_path(graph, node, end, path)
             if newpath:
-                if not shortest or TOP_defDistance(newpath) < TOP_defDistance(shortest):
+                if not shortest or TOP_defDistance(newpath) < TOP_defDistance(shortest): # Adding TOP function
                     shortest = newpath
     return shortest
 
