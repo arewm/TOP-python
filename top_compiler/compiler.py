@@ -40,14 +40,14 @@ def compile_with_top(source_path, api_path):
     # Generate the api library package and copy it over
     from rope.contrib import generate
     try:
-        pkg = project2.root.get_child('test')
+        pkg = project2.root.get_child('test_api')
     except ResourceNotFoundError:
-        pkg = generate.create_package(project2, 'test')
+        pkg = generate.create_package(project2, 'test_api')
     try:
-        mod2 = project2.root.get_child('test/api.py')
+        mod2 = project2.root.get_child('test_api/api.py')
     except ResourceNotFoundError:
         mod2 = generate.create_module(project2, 'api', pkg)
-    source_api = project.root.get_child('test/api.py')
+    source_api = project.root.get_child('test_api/api.py')
     mod2.write(source_api.read())
 
     # inline each API call
