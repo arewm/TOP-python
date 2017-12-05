@@ -7,7 +7,7 @@ author: Guido van Rossum
 Assumption : No Negative edges in Graph
              Using Directed Acyclic Graph
              
-Changes made : es001 
+Changes made : es001 - Remove in built python len function 
 """""
 # adding function for distance calculation --es001
 def len_path(S):
@@ -29,7 +29,7 @@ def find_shortest_path(graph, start, end, path=[]):
         if node not in path:
             newpath = find_shortest_path(graph, node, end, path)
             if newpath:
-                if not shortest or len_path(newpath) < len_path(shortest):
+                if not shortest or len_path(newpath) < len_path(shortest): #es001
                     shortest = newpath
     return shortest
 
