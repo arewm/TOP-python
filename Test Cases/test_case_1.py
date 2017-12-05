@@ -5,9 +5,13 @@ Test Case picked from
 source: https://www.python.org/doc/essays/graphs/
 author: Guido van Rossum
 Assumption : No Negative edges in Graph
-
-Directed Acyclic Graph
+             Using Directed Acyclic Graph
+             
+Changes made : es001 
 """""
+# adding function for distance calculation --es001
+def len_path(S):
+    return sum(1 for i in S)
 
 
 def find_shortest_path(graph, start, end, path=[]):
@@ -25,7 +29,7 @@ def find_shortest_path(graph, start, end, path=[]):
         if node not in path:
             newpath = find_shortest_path(graph, node, end, path)
             if newpath:
-                if not shortest or len(newpath) < len(shortest):
+                if not shortest or len_path(newpath) < len_path(shortest):
                     shortest = newpath
     return shortest
 
