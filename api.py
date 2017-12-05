@@ -30,9 +30,10 @@ class fineCat():
         self.catType = catType
         self.num_landmarks = num_landmarks
 
-# not too sure whats the meaning of this, it was in top.h
-def TOP_defDistance(defDist):
-    print(str(defDist))
+# function to calculate the Manhattan distance between two points
+# which is the sum of the linear or horizontal distance between two points
+def TOP_defDistance(S):
+    return sum(1 for i in S)
 
 # not too sure whats the meaning of this, it was in top.h
 def TOP_findClosestTargets(k):
