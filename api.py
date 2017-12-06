@@ -30,6 +30,12 @@ class fineCat():
         self.catType = catType
         self.num_landmarks = num_landmarks
 
+
+
+"""
+ Helper Functions
+"""
+
 # function to calculate the Manhattan distance between two points
 # which is the sum of the linear or horizontal distance between two points
 def TOP_defDistance(S):
@@ -39,11 +45,8 @@ def TOP_defDistance(S):
 def TOP_findClosestTargets(k):
     print(str(k))
     return false
-
-"""
- Helper Functions
-"""
-# funtion to calculate Euclidean Distance between two points
+  
+# function to calculate Euclidean Distance between two points
 def top_distance_Euclidean(a, b):
     total = 0.0
     for i in range(0,(len(a)-1)):
