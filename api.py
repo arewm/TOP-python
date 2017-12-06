@@ -43,10 +43,10 @@ def TOP_findClosestTargets(k):
 """
  Helper Functions
 """
-# a, b are lists of doubles
-def distance_Euclidean(a, b):
+# funtion to calculate Euclidean Distance between two points
+def top_distance_Euclidean(a, b):
     total = 0.0
-    for i in a:
+    for i in range(0,(len(a)-1)):
         distance = a[i] - b[i]
         total = total + distance * distance
     return math.sqrt(total)
