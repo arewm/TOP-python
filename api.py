@@ -39,57 +39,69 @@ class fineCat():
 # function to calculate the Manhattan distance between two points
 # which is the sum of the linear or horizontal distance between two points
 def TOP_defDistance(S):
-    return sum(1 for i in S)
+    point_set = S
+    return sum(1 for i in point_set)
 
 # not too sure whats the meaning of this, it was in top.h
 def TOP_findClosestTargets(k):
-    print(str(k))
-    return false
+    target = k
+    print(str(target))
+    return False
   
 def TOP_distance_Euclidean(a, b):
+    pt_a = a
+    pt_b = b
     total = 0.0
-    for i in range(0,(len(a)-1)):
-        distance = a[i] - b[i]
+    for i in range(0,(len(pt_a)-1)):
+        distance = pt_a[i] - pt_b[i]
         total = total + distance * distance
     return math.sqrt(total)
 
 # function to calculate Euclidean Distance between points 
 # to simplify Triangle Inequality Calcs
 def TOP_calculate_distance(l):
-    start=l[0]
+    pts = l
+    start=pts[0]
     dist=[]
-    for i in range(0,len(l)):
-        distance_training=TOP_distance_Euclidean(l[0],l[i])
+    for i in range(0,len(pts)):
+        distance_training=TOP_distance_Euclidean(pts[0],pts[i])
         dist.append(distance_training)
     return dist
 
 
 # add two vectors (lists)
 def plus_equal_vector(a, b):
-    for i in a:
-        a[i] = a[i] + b[i]
-    return a
+    vec_a = a
+    vec_b = b
+    for i in vec_a:
+        vec_a[i] = vec_a[i] + vec_b[i]
+    return vec_a
 
 # subtract two vectors (lists)
 def subs_equal_vector(a, b):
-    for i in a:
-        a[i] = a[i] - b[i]
-    return a
+    vec_a = a
+    vec_b = b
+    for i in vec_a:
+        vec_a[i] = vec_a[i] - vec_b[i]
+    return vec_a
 
 # scale a vector A by value D
 def scale_vector(a, d):
-    for i in a:
-        a[i] = a[i] * d
-    return a
+    vec_a = a
+    scale = d
+    for i in vec_a:
+        vec_a[i] = vec_a[i] * scale
+    return vec_a
 
 """
  Definitions:
 """
-def maxLandmarks(Budget,cat,L,M,Tsqrt, int Qsqrt):
+def maxLandmarks(Budget,cat,L,M,Tsqrt, Qsqrt):
     maxL = 100
     return maxL
 
 def estimateSpaceCost(Tghost,T,Q,useTset):
+
     space = 1000
     return 1000
 
