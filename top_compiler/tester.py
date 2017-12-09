@@ -1,4 +1,4 @@
-from test.api import REPLACE_ME, REPLACE_ME_TOO
+from test_api.api import REPLACE_ME, REPLACE_ME_TOO
 a = 1
 b = 2
 
