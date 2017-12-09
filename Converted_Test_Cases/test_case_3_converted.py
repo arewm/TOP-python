@@ -9,27 +9,36 @@ http://pandoricweb.tumblr.com/post/8646701677/python-implementation-of-the-k-mea
 
 import math
 import random
+import time
+from api import TOP_distance_Euclidean
+from api import TOP_calculate_distance
 
 def main():
-    num_points = 20
-    dimensions = 2
+    timeList = []
+    for index in range(1,200):
+        t1 = time.time()
+        num_points = 200
+        dimensions = 2
 
-    lower = 0
-    upper = 200
+        lower = 0
+        upper = 200
 
-    num_clusters = 3
-    cutoff = 0.2
+        num_clusters = 5
+        cutoff = 0.2
 
-    # Generate some points to cluster
-    points = [
-        makeRandomPoint(dimensions, lower, upper) for i in xrange(num_points)
-    ]
-    clusters = kmeans(points, num_clusters, cutoff)
+        # Generate some points to cluster
+        points = [
+            makeRandomPoint(dimensions, lower, upper) for i in xrange(num_points)
+        ]
+        clusters = kmeans(points, num_clusters, cutoff)
+        t2 = time.time()
+        timeList.append(t2 - t1)
 
-    # Print our clusters
-    for i, c in enumerate(clusters):
-        for p in c.points:
-            print " Cluster: ", i, "\t Point :", p
+    totalTime = 0
+    for times in timeList:
+        totalTime = totalTime + times
+    averageTime = totalTime / 200
+    print("average completion time: " + str(averageTime))
 
 class Point(object):
     '''
@@ -84,7 +93,8 @@ class Cluster(object):
         self.points = points
         self.centroid = self.calculateCentroid()
         # TODO: Replace with TOP call
-        shift = getDistance(old_centroid, self.centroid)
+        # shift = getDistance(old_centroid, self.centroid)
+        shift = TOP_distance_Euclidean(old_centroid.coords, self.centroid.coords)
         return shift
 
     def calculateCentroid(self):
@@ -97,7 +107,7 @@ class Cluster(object):
         # Reformat that so all x's are together, all y'z etc.
         unzipped = zip(*coords)
         # Calculate the mean for each dimension
-        # TODO: Replace with TOP function
+        # TODO: Replace with TOP function, or not? its just mean
         centroid_coords = [math.fsum(dList)/numPoints for dList in unzipped]
 
         return Point(centroid_coords)
@@ -117,17 +127,20 @@ def kmeans(points, k, cutoff):
         clusterCount = len(clusters)
 
         loopCounter += 1
+        # goes through every point and assigns closest centroid
         for p in points:
             # Get the distance between that point and the centroid of the first cluster.
             # TODO: replace with TOP Call
-            smallest_distance = getDistance(p, clusters[0].centroid)
+            # old: smallest_distance = getDistance(p, clusters[0].centroid)
+            smallest_distance = TOP_distance_Euclidean(p.coords, clusters[0].centroid.coords)
 
             clusterIndex = 0
             for i in range(clusterCount - 1):
                 # calculate the distance of that point to each other cluster's
                 # centroid.
                 # TODO: replace with TOP function call
-                distance = getDistance(p, clusters[i+1].centroid)
+                # old: distance = getDistance(p, clusters[i+1].centroid)
+                distance = TOP_distance_Euclidean(p.coords, clusters[i+1].centroid.coords)
 
                 if distance < smallest_distance:
                     smallest_distance = distance
