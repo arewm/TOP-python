@@ -46,13 +46,23 @@ def TOP_findClosestTargets(k):
     print(str(k))
     return false
   
-# function to calculate Euclidean Distance between two points
-def top_distance_Euclidean(a, b):
+def TOP_distance_Euclidean(a, b):
     total = 0.0
     for i in range(0,(len(a)-1)):
         distance = a[i] - b[i]
         total = total + distance * distance
     return math.sqrt(total)
+
+# function to calculate Euclidean Distance between points 
+# to simplify Triangle Inequality Calcs
+def TOP_calculate_distance(l):
+    start=l[0]
+    dist=[]
+    for i in range(0,len(l)):
+        distance_training=TOP_distance_Euclidean(l[0],l[i])
+        dist.append(distance_training)
+    return dist
+
 
 # add two vectors (lists)
 def plus_equal_vector(a, b):
