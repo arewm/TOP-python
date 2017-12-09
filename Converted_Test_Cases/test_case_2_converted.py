@@ -34,7 +34,7 @@ def getNeighbors(trainingSet, testInstance,distance_training_top, k):
     first_dist = TOP_distance_Euclidean(testInstance, trainingSet[0])
     second_dist = TOP_distance_Euclidean(testInstance, trainingSet[1])
     lowest_dist = TOP_distance_Euclidean(testInstance, trainingSet[2])
-    # default case : Need atleast 3 distance values 
+    # default case : Need atleast 3 distance values to handle edge cases since k is 3
     distances = [(trainingSet[0],first_dist),(trainingSet[1],second_dist),(trainingSet[2],lowest_dist)]
     for x in range(3,len(trainingSet)):
         # apply triangle inequality here
