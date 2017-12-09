@@ -12,6 +12,7 @@ source: https://machinelearningmastery.com/machine-learning-in-python-step-by-st
 import csv
 import random
 import math
+import time
 import operator
 from api import TOP_distance_Euclidean # Adding TOP function
 from api import TOP_calculate_distance
@@ -34,7 +35,7 @@ def getNeighbors(trainingSet, testInstance,distance_training_top, k):
     first_dist = TOP_distance_Euclidean(testInstance, trainingSet[0])
     second_dist = TOP_distance_Euclidean(testInstance, trainingSet[1])
     lowest_dist = TOP_distance_Euclidean(testInstance, trainingSet[2])
-    # default case : Need atleast 3 distance values to handle edge cases since k is 3
+
     distances = [(trainingSet[0],first_dist),(trainingSet[1],second_dist),(trainingSet[2],lowest_dist)]
     for x in range(3,len(trainingSet)):
         # apply triangle inequality here
@@ -42,9 +43,15 @@ def getNeighbors(trainingSet, testInstance,distance_training_top, k):
             #print("j")
             lowest_dist = TOP_distance_Euclidean(testInstance, trainingSet[x]) # Adding TOP function
             distances.append((trainingSet[x], lowest_dist))
+        #else:
+            #print("k")
+         #   lowest_dist = TOP_distance_Euclidean(testInstance, trainingSet[x])
+    #print(distances)
     distances.sort(key=operator.itemgetter(1))
+    #print(distances)
     neighbors = []
     for x in range(k):
+        #print("i")
         neighbors.append(distances[x][0])
     return neighbors
 
@@ -70,6 +77,7 @@ def getAccuracy(testSet, predictions):
 
 
 def main():
+    start_time = time.time()
     # prepare data
     trainingSet = []
     testSet = []
@@ -89,6 +97,6 @@ def main():
         print('> predicted=' + repr(result) + ', actual=' + repr(testSet[x][-1]))
     accuracy = getAccuracy(testSet, predictions)
     print('Accuracy: ' + repr(accuracy) + '%')
-
+    print("--- %s seconds ---" % (time.time() - start_time))
 
 main()
