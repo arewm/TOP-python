@@ -70,6 +70,7 @@ def getAccuracy(testSet, predictions):
 
 def main():
     # prepare data
+    start_time = time.time() #es001 Adding time 
     trainingSet = []
     testSet = []
     split = 0.67
@@ -86,6 +87,8 @@ def main():
         print('> predicted=' + repr(result) + ', actual=' + repr(testSet[x][-1]))
     accuracy = getAccuracy(testSet, predictions)
     print('Accuracy: ' + repr(accuracy) + '%')
+    print("--- %s seconds ---" % (time.time() - start_time))
+
 
 
 main()
