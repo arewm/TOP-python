@@ -13,11 +13,12 @@ import csv
 import random
 import math
 import operator
-from api import top_distance_Euclidean # Adding TOP function
-
+from api import TOP_distance_Euclidean # Adding TOP function
+from api import TOP_calculate_distance
 def loadDataset(filename, split, trainingSet=[], testSet=[]):
     with open(filename, 'rb') as csvfile:
         lines = csv.reader(csvfile)
+
         dataset = list(lines)
         for x in range(len(dataset) - 1):
             for y in range(4):
@@ -28,12 +29,18 @@ def loadDataset(filename, split, trainingSet=[], testSet=[]):
                 testSet.append(dataset[x])
 
 
-def getNeighbors(trainingSet, testInstance, k):
-    distances = []
+def getNeighbors(trainingSet, testInstance,distance_training_top, k):
     length = len(testInstance) - 1
-    for x in range(len(trainingSet)):
-        dist = top_distance_Euclidean(testInstance, trainingSet[x]) # Adding TOP function
-        distances.append((trainingSet[x], dist))
+    first_dist = TOP_distance_Euclidean(testInstance, trainingSet[0])
+    second_dist = TOP_distance_Euclidean(testInstance, trainingSet[1])
+    lowest_dist = TOP_distance_Euclidean(testInstance, trainingSet[2])
+    distances = [(trainingSet[0],first_dist),(trainingSet[1],second_dist),(trainingSet[2],lowest_dist)]
+    for x in range(3,len(trainingSet)):
+        # apply triangle inequality here
+        if (first_dist>(distance_training_top[x])):
+            #print("j")
+            lowest_dist = TOP_distance_Euclidean(testInstance, trainingSet[x]) # Adding TOP function
+            distances.append((trainingSet[x], lowest_dist))
     distances.sort(key=operator.itemgetter(1))
     neighbors = []
     for x in range(k):
@@ -66,14 +73,16 @@ def main():
     trainingSet = []
     testSet = []
     split = 0.67
-    loadDataset('Test_cases/iris.data', split, trainingSet, testSet)
+    loadDataset('/Users/esha/PycharmProjects/Compiler_Project_CC/Test_cases/iris.data', split, trainingSet, testSet)
     print 'Train set: ' + repr(len(trainingSet))
     print 'Test set: ' + repr(len(testSet))
     # generate predictions
     predictions = []
     k = 3
+    distance_training_top=TOP_calculate_distance(trainingSet)
+    #print(distance_training)
     for x in range(len(testSet)):
-        neighbors = getNeighbors(trainingSet, testSet[x], k)
+        neighbors = getNeighbors(trainingSet, testSet[x], distance_training_top, k)
         result = getResponse(neighbors)
         predictions.append(result)
         print('> predicted=' + repr(result) + ', actual=' + repr(testSet[x][-1]))
