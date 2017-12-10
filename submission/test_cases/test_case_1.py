@@ -81,7 +81,7 @@ def shortest_path(graph, start, end,path=[],weight=0):
 
 
 def main():
-
+    start_time =  time.time()
     G = Graph()
     G.add_vertex('a')
     G.add_vertex('b')
@@ -95,19 +95,10 @@ def main():
     G.add_edge('b', 'c', 1)
     G.add_edge('c', 'e', 3)
     G.add_edge('d', 'e', 4)
-   
-    timeList = []
-    for i in range(1,200):
-        t1 = time.time()
-        print(find_shortest_path(graph,'a','d'))
-        t2 = time.time()
-        timeList.append(t2 - t1)
+    print("--- %s seconds ---" % ((time.time() - start_time)))
+    #print(G)
+    print(shortest_path(G, 'a', 'e'))
 
-    totalTime = 0
-    for times in timeList:
-        totalTime = totalTime + times
-    averageTime = totalTime / 200
-    print("average completion time: " + str(averageTime))
 
-    #print(len(find_shortest_path(graph,'a','d')))
+
 main()
