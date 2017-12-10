@@ -13,7 +13,7 @@ import time
 def main():
     timeList = []
     for index in range(1,200):
-        startTime = time.time()
+        t1 = time.time()
         num_points = 200
         dimensions = 2
 
@@ -34,8 +34,8 @@ def main():
         #    for p in c.points:
         #        print " Cluster: ", i, "\t Point :", p
 
-        endTime = time.time()
-        timeList.append(endTime - startTime)
+        t2 = time.time()
+        timeList.append(t2 - t1)
 
     totalTime = 0
     for times in timeList:

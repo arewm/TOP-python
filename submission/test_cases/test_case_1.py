@@ -1,14 +1,15 @@
 """""
-Test Case 1 for TOP 
-Point to Point - calculated the shortest distance between two points in a directed graph 
-Test Case picked from 
+Test Case 1 for TOP
+Point to Point - calculated the shortest distance between two points in a directed graph
+Test Case picked from
 source: https://www.python.org/doc/essays/graphs/
 author: Guido van Rossum
 Assumption : No Negative edges in Graph
              Using Directed Acyclic Graph
-             
-Changes made : es001 - Remove in built python len function 
+
+Changes made : es001 - Remove in built python len function
 """""
+import time
 # adding function for distance calculation --es001
 def len_path(S):
     return sum(1 for i in S)
@@ -40,9 +41,19 @@ if __name__=='__main__':
         'b': {'d'},
         'c': {'e'},
         'd': {'e', 'c','f'}
-
     }
-    print(find_shortest_path(graph,'a','d'))
+    
+    timeList = []
+    for i in range(1,200):
+        t1 = time.time()
+        print(find_shortest_path(graph,'a','d'))
+        t2 = time.time()
+        timeList.append(t2 - t1)
 
-    print(len(find_shortest_path(graph,'a','d')))
+    totalTime = 0
+    for times in timeList:
+        totalTime = totalTime + times
+    averageTime = totalTime / 200
+    print("average completion time: " + str(averageTime))
 
+    #print(len(find_shortest_path(graph,'a','d')))

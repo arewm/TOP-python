@@ -1,8 +1,8 @@
 """""
-Test Case 2 for TOP 
-KNN: K nearest Neighbours 
+Test Case 2 for TOP
+KNN: K nearest Neighbours
 Finding the K nearest neighbors for a point
-Test Case picked from 
+Test Case picked from
 source: https://machinelearningmastery.com/tutorial-to-implement-k-nearest-neighbors-in-python-from-scratch/
 source: https://machinelearningmastery.com/machine-learning-in-python-step-by-step/
 """""
@@ -13,6 +13,7 @@ import csv
 import random
 import math
 import operator
+import time
 
 
 def loadDataset(filename, split, trainingSet=[], testSet=[]):
@@ -70,25 +71,34 @@ def getAccuracy(testSet, predictions):
 
 def main():
     # prepare data
-    start_time = time.time() #es001 Adding time 
     trainingSet = []
     testSet = []
     split = 0.67
-    loadDataset('Test_cases/iris.data', split, trainingSet, testSet)
+    loadDataset('./iris.data', split, trainingSet, testSet)
     print 'Train set: ' + repr(len(trainingSet))
     print 'Test set: ' + repr(len(testSet))
     # generate predictions
-    predictions = []
-    k = 3
-    for x in range(len(testSet)):
-        neighbors = getNeighbors(trainingSet, testSet[x], k)
-        result = getResponse(neighbors)
-        predictions.append(result)
-        print('> predicted=' + repr(result) + ', actual=' + repr(testSet[x][-1]))
-    accuracy = getAccuracy(testSet, predictions)
-    print('Accuracy: ' + repr(accuracy) + '%')
-    print("--- %s seconds ---" % (time.time() - start_time))
+    timeList = []
+    for i in range(1,200):
+        t1 = time.time()
 
+        predictions = []
+        k = 3
+        for x in range(len(testSet)):
+            neighbors = getNeighbors(trainingSet, testSet[x], k)
+            result = getResponse(neighbors)
+            predictions.append(result)
+            print('> predicted=' + repr(result) + ', actual=' + repr(testSet[x][-1]))
+        accuracy = getAccuracy(testSet, predictions)
+        #print('Accuracy: ' + repr(accuracy) + '%')
 
+        t2 = time.time()
+        timeList.append(t2 - t1)
+
+    totalTime = 0
+    for times in timeList:
+        totalTime = totalTime + times
+    averageTime = totalTime / 200
+    print("average completion time: " + str(averageTime))
 
 main()
