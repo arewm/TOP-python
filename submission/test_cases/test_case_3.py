@@ -1,14 +1,17 @@
 """""
-Test Case 3 for TOP
+Converted Test Case 3 for TOP
 K Means
 Clustering query points into K groups
 Test Case picked from
 source: https://gist.github.com/iandanforth/5862470
 http://pandoricweb.tumblr.com/post/8646701677/python-implementation-of-the-k-means-clustering
 """""
+
 import math
 import random
 import time
+from api import TOP_distance_Euclidean
+from api import TOP_calculate_distance
 
 def main():
     timeList = []
@@ -28,12 +31,6 @@ def main():
             makeRandomPoint(dimensions, lower, upper) for i in xrange(num_points)
         ]
         clusters = kmeans(points, num_clusters, cutoff)
-
-        # Print our clusters
-        #for i, c in enumerate(clusters):
-        #    for p in c.points:
-        #        print " Cluster: ", i, "\t Point :", p
-
         t2 = time.time()
         timeList.append(t2 - t1)
 
@@ -61,7 +58,6 @@ class Cluster(object):
     '''
     A set of points and their centroid
     '''
-
     def __init__(self, points):
         '''
         points - A list of point objects
@@ -96,7 +92,9 @@ class Cluster(object):
         old_centroid = self.centroid
         self.points = points
         self.centroid = self.calculateCentroid()
-        shift = getDistance(old_centroid, self.centroid)
+        # TODO: Replace with TOP call
+        # shift = getDistance(old_centroid, self.centroid)
+        shift = TOP_distance_Euclidean(old_centroid.coords, self.centroid.coords)
         return shift
 
     def calculateCentroid(self):
@@ -109,6 +107,7 @@ class Cluster(object):
         # Reformat that so all x's are together, all y'z etc.
         unzipped = zip(*coords)
         # Calculate the mean for each dimension
+        # TODO: Replace with TOP function, or not? its just mean
         centroid_coords = [math.fsum(dList)/numPoints for dList in unzipped]
 
         return Point(centroid_coords)
@@ -127,20 +126,21 @@ def kmeans(points, k, cutoff):
         lists = [[] for _ in clusters]
         clusterCount = len(clusters)
 
-        # Start counting loops
         loopCounter += 1
-        # For every point in the dataset ...
+        # goes through every point and assigns closest centroid
         for p in points:
-            # Get the distance between that point and the centroid of the first
-            # cluster.
-            smallest_distance = getDistance(p, clusters[0].centroid)
+            # Get the distance between that point and the centroid of the first cluster.
+            # TODO: replace with TOP Call
+            # old: smallest_distance = getDistance(p, clusters[0].centroid)
+            smallest_distance = TOP_distance_Euclidean(p.coords, clusters[0].centroid.coords)
 
-            # Set the cluster this point belongs to
             clusterIndex = 0
             for i in range(clusterCount - 1):
                 # calculate the distance of that point to each other cluster's
                 # centroid.
-                distance = getDistance(p, clusters[i+1].centroid)
+                # TODO: replace with TOP function call
+                # old: distance = getDistance(p, clusters[i+1].centroid)
+                distance = TOP_distance_Euclidean(p.coords, clusters[i+1].centroid.coords)
 
                 if distance < smallest_distance:
                     smallest_distance = distance
@@ -153,18 +153,13 @@ def kmeans(points, k, cutoff):
             shift = clusters[i].update(lists[i])
             biggest_shift = max(biggest_shift, shift)
 
-        # If the centroids have stopped moving much, say we're done!
         if biggest_shift < cutoff:
             print "Converged after %s iterations" % loopCounter
             break
     return clusters
 
+# TODO: This will all be replaces by TOP calls
 def getDistance(a, b):
-    '''
-    Euclidean distance between two n-dimensional points.
-    https://en.wikipedia.org/wiki/Euclidean_distance#n_dimensions
-    Note: This can be very slow and does not scale well
-    '''
     if a.n != b.n:
         raise Exception("ERROR: non comparable points")
 
@@ -177,10 +172,6 @@ def getDistance(a, b):
     return distance
 
 def makeRandomPoint(n, lower, upper):
-    '''
-    Returns a Point object with n dimensions and values between lower and
-    upper in each of those dimensions
-    '''
     p = Point([random.uniform(lower, upper) for _ in range(n)])
     return p
 
