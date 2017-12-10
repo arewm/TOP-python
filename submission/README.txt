@@ -43,6 +43,7 @@ a copy of this file inside the /test_cases folder (however they are identical).
 
 File: `api.py`
     This file contains all TOP API definitions to be used by our compiler in replacing any TOP calls within test cases.
+    It is located conviently in root for inspection, but it is also located inside /test_cases/TOP_api where it is actually used.
 
 !!!!!!!!!!!!!!!!!!
 !!! Test Cases !!!
@@ -73,11 +74,8 @@ File: `test_case_3.py`
 File: `test_case_3_TOP.py`
     Implementation of the K-Means distance-related problem. This version is the modified TOP version with calls to our TOP API.
 
-File: `api.py`
-    A copy of our "api.py" file for easier testing, this is an exact copy of the file located in the root directory.
-
-File: `api.pyc`
-    Compiled version of our "api.py", kept for easier testing.
+Folder: `TOP_api`
+    Contains copy of "api.py" to be used by code, along with compiled versions of the api, "api.pyc"
 
 ############
 
