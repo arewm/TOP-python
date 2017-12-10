@@ -14,8 +14,9 @@ import random
 import math
 import time
 import operator
-from TOP_api.api import TOP_distance_Euclidean # Adding TOP function
 from TOP_api.api import TOP_calculate_distance
+from TOP_api.api import TOP_getNeighbors
+
 def loadDataset(filename, split, trainingSet=[], testSet=[]):
     with open(filename, 'rb') as csvfile:
         lines = csv.reader(csvfile)
@@ -28,33 +29,6 @@ def loadDataset(filename, split, trainingSet=[], testSet=[]):
                 trainingSet.append(dataset[x])
             else:
                 testSet.append(dataset[x])
-
-
-def getNeighbors(trainingSet, testInstance,distance_training_top, k):
-    length = len(testInstance) - 1
-    first_dist = TOP_distance_Euclidean(testInstance, trainingSet[0])
-    second_dist = TOP_distance_Euclidean(testInstance, trainingSet[1])
-    lowest_dist = TOP_distance_Euclidean(testInstance, trainingSet[2])
-
-    distances = [(trainingSet[0],first_dist),(trainingSet[1],second_dist),(trainingSet[2],lowest_dist)]
-    for x in range(3,len(trainingSet)):
-        # apply triangle inequality here
-        if (first_dist>(distance_training_top[x])):
-            #print("j")
-            lowest_dist = TOP_distance_Euclidean(testInstance, trainingSet[x]) # Adding TOP function
-            distances.append((trainingSet[x], lowest_dist))
-        #else:
-            #print("k")
-         #   lowest_dist = TOP_distance_Euclidean(testInstance, trainingSet[x])
-    #print(distances)
-    distances.sort(key=operator.itemgetter(1))
-    #print(distances)
-    neighbors = []
-    for x in range(k):
-        #print("i")
-        neighbors.append(distances[x][0])
-    return neighbors
-
 
 def getResponse(neighbors):
     classVotes = {}
@@ -94,7 +68,7 @@ def main():
         distance_training_top=TOP_calculate_distance(trainingSet)
         #print(distance_training)
         for x in range(len(testSet)):
-            neighbors = getNeighbors(trainingSet, testSet[x], distance_training_top, k)
+            neighbors = TOP_getNeighbors(trainingSet, testSet[x], distance_training_top, k)
             result = getResponse(neighbors)
             predictions.append(result)
             print('> predicted=' + repr(result) + ', actual=' + repr(testSet[x][-1]))

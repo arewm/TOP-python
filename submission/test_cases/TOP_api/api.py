@@ -3,6 +3,8 @@ api.py
 """
 from __future__ import absolute_import
 import math
+import operator
+import random
 
 """
  Structs and such
@@ -140,6 +142,33 @@ def TOP_P2P_distance(graph, start):
         S.add(v)
 
     return (delta, previous)
+
+# Core function
+# Find nearest neighbors for KNN
+def TOP_getNeighbors(trainingSet, testInstance,distance_training_top, k):
+    length = len(testInstance) - 1
+    first_dist = TOP_distance_Euclidean(testInstance, trainingSet[0])
+    second_dist = TOP_distance_Euclidean(testInstance, trainingSet[1])
+    lowest_dist = TOP_distance_Euclidean(testInstance, trainingSet[2])
+
+    distances = [(trainingSet[0],first_dist),(trainingSet[1],second_dist),(trainingSet[2],lowest_dist)]
+    for x in range(3,len(trainingSet)):
+        # apply triangle inequality here
+        if (first_dist>(distance_training_top[x])):
+            #print("j")
+            lowest_dist = TOP_distance_Euclidean(testInstance, trainingSet[x]) # Adding TOP function
+            distances.append((trainingSet[x], lowest_dist))
+        #else:
+            #print("k")
+         #   lowest_dist = TOP_distance_Euclidean(testInstance, trainingSet[x])
+    #print(distances)
+    distances.sort(key=operator.itemgetter(1))
+    #print(distances)
+    neighbors = []
+    for x in range(k):
+        #print("i")
+        neighbors.append(distances[x][0])
+    return neighbors
 
 # Core function
 # Select and configure landmark definitions
