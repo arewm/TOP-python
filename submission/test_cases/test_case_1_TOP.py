@@ -13,6 +13,8 @@ import collections
 import math
 import time
 
+from TOP_api.api import TOP_P2P_distance
+
 class Graph:
     def __init__(self):
         self.vertices = set()
@@ -35,46 +37,10 @@ class Graph:
         string += "Weights: " + str(self.weights)
         return string
 
-
-def TOP_distance(graph, start):
-    # initializations
-    S = set()
-
-    # delta represents the length shortest distance paths from start -> v, for v in delta.
-    # We initialize it so that every vertex has a path of infinity
-    delta = dict.fromkeys(list(graph.vertices),float('Inf'))
-    previous = dict.fromkeys(list(graph.vertices), None)
-
-    # then we set the path length of the start vertex to 0
-    delta[start] = 0
-
-    # while there exists a vertex v not in S
-    while S != graph.vertices:
-        # let v be the closest vertex that has not been visited...it will begin at 'start'
-        v = min((set(delta.keys()) - S), key=delta.get)
-
-        # for each neighbor of v not in S
-        for neighbor in set(graph.edges[v]) - S:
-            new_path = delta[v] + graph.weights[v, neighbor]
-
-            # is the new path from neighbor through
-            if new_path < delta[neighbor]:
-                # since it's optimal, update the shortest path for neighbor
-                delta[neighbor] = new_path
-
-                # set the previous vertex of neighbor to v
-                previous[neighbor] = v
-
-        S.add(v)
-
-    return (delta, previous)
-
-
 def shortest_path(graph, start, end):
     # rename the Djikstra to TOP
     #Djikstra implements Triangle Inequality
-    delta, previous = TOP_distance(graph, start)
-
+    delta, previous = TOP_P2P_distance(graph, start)
 
     path = []
     vertex = end
