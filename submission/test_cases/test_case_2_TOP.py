@@ -1,8 +1,8 @@
 """""
-Converted Test Case 2 for TOP 
-KNN: K nearest Neighbours 
+Converted Test Case 2 for TOP
+KNN: K nearest Neighbours
 Finding the K nearest neighbors for a point
-Original Test Case picked from 
+Original Test Case picked from
 source: https://machinelearningmastery.com/tutorial-to-implement-k-nearest-neighbors-in-python-from-scratch/
 source: https://machinelearningmastery.com/machine-learning-in-python-step-by-step/
 """""
@@ -77,26 +77,36 @@ def getAccuracy(testSet, predictions):
 
 
 def main():
-    start_time = time.time()
     # prepare data
     trainingSet = []
     testSet = []
     split = 0.67
-    loadDataset('/Users/esha/PycharmProjects/Compiler_Project_CC/Test_cases/iris.data', split, trainingSet, testSet)
+    loadDataset('./iris.data', split, trainingSet, testSet)
     print 'Train set: ' + repr(len(trainingSet))
     print 'Test set: ' + repr(len(testSet))
-    # generate predictions
-    predictions = []
-    k = 3
-    distance_training_top=TOP_calculate_distance(trainingSet)
-    #print(distance_training)
-    for x in range(len(testSet)):
-        neighbors = getNeighbors(trainingSet, testSet[x], distance_training_top, k)
-        result = getResponse(neighbors)
-        predictions.append(result)
-        print('> predicted=' + repr(result) + ', actual=' + repr(testSet[x][-1]))
-    accuracy = getAccuracy(testSet, predictions)
-    print('Accuracy: ' + repr(accuracy) + '%')
-    print("--- %s seconds ---" % (time.time() - start_time))
+
+    timeList = []
+    for index in range(1,200):
+        t1 = time.time()
+        # generate predictions
+        predictions = []
+        k = 3
+        distance_training_top=TOP_calculate_distance(trainingSet)
+        #print(distance_training)
+        for x in range(len(testSet)):
+            neighbors = getNeighbors(trainingSet, testSet[x], distance_training_top, k)
+            result = getResponse(neighbors)
+            predictions.append(result)
+            print('> predicted=' + repr(result) + ', actual=' + repr(testSet[x][-1]))
+        accuracy = getAccuracy(testSet, predictions)
+        #print('Accuracy: ' + repr(accuracy) + '%')
+        t2 = time.time()
+        timeList.append(t2 - t1)
+
+    totalTime = 0
+    for times in timeList:
+        totalTime = totalTime + times
+    averageTime = totalTime / 200
+    print("average completion time: " + str(averageTime))
 
 main()

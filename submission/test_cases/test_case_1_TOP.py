@@ -1,12 +1,13 @@
 """""
-Converted Test Case 1 for TOP 
-Point to Point - calculated the shortest distance between two points in a directed graph 
-Original Test Case picked from 
+Converted Test Case 1 for TOP
+Point to Point - calculated the shortest distance between two points in a directed graph
+Original Test Case picked from
 source: https://www.python.org/doc/essays/graphs/
 author: Guido van Rossum
 """""
 
 from api import TOP_defDistance # Adding TOP function
+import time
 
 def find_shortest_path(graph, start, end, path=[]):
     """
@@ -36,7 +37,18 @@ if __name__=='__main__':
         'd': {'e', 'c','f'}
 
     }
-    print(find_shortest_path(graph,'a','d'))
+    #print(find_shortest_path(graph,'a','d'))
+    timeList = []
+    for i in range(1,200):
+        t1 = time.time()
+        print(find_shortest_path(graph,'a','d'))
+        t2 = time.time()
+        timeList.append(t2 - t1)
 
-    print(len(find_shortest_path(graph,'a','d')))
+    totalTime = 0
+    for times in timeList:
+        totalTime = totalTime + times
+    averageTime = totalTime / 200
+    print("average completion time: " + str(averageTime))
 
+    #print(len(find_shortest_path(graph,'a','d')))
