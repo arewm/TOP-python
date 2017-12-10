@@ -101,7 +101,7 @@ EXECUTION
 
 #########
 
-Execution of the compiler can be accomplished with the following command:
+Execution of the compiler can be accomplished with the following command (from the current directory):
     python compile_top.py <source_file.py> [--library <api_file.py>]
 
 If you do not provide a library, the default API will be used.
@@ -112,6 +112,7 @@ In order for the compiler to work properly on a Python file, it must have the fo
 If defining a new API for the compiler to replace, it must have the following property:
 - when defining methods in the API, redefine all variables directly within the API method with a unique name (i.e. `top_api_funstuff`). It does not look like I can do cascading variable redefinitions
 - All API methods to be replaced have to be function calls
+- The code for the API must be contained within its own module (see the `test_cases` directory for an example), but the .py function is what needs to be referenced in the CLI
 
 
 ###############
@@ -127,13 +128,13 @@ import calls will be removed.
 If there are any issues with the compilation process, an error will be thrown. If any compilation occurred before the
 failure, the partially compiled file will be located within the `top_compiled` folder.
 
-#########
+##################
 
-TEST CASE
+COMPILER TEST CASE
 
-#########
+##################
 
-To execute the test case, from the root directory, use the command:
+To execute the compiler test case, from the current directory, use the command:
     python compile_top.py top_compiler/tester.py --library top_compiler/test_api/api.py
 
 This will create a `top_compiled` folder within `top_compiler` containing the compiled tester.py file.
