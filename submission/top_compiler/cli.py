@@ -1,7 +1,7 @@
 import argparse
 import os.path as op
 
-api = op.join(op.dirname(__file__), '../api.py')
+api = op.join(op.dirname(__file__), '../test_cases/TOP_api/api.py')
 
 def get_arg_parse():
     parser = argparse.ArgumentParser(description='Compile Python for the Triangle Inequality.')

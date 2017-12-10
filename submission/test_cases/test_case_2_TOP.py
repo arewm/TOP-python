@@ -14,8 +14,8 @@ import random
 import math
 import time
 import operator
-from api import TOP_distance_Euclidean # Adding TOP function
-from api import TOP_calculate_distance
+from TOP_api.api import TOP_distance_Euclidean # Adding TOP function
+from TOP_api.api import TOP_calculate_distance
 def loadDataset(filename, split, trainingSet=[], testSet=[]):
     with open(filename, 'rb') as csvfile:
         lines = csv.reader(csvfile)

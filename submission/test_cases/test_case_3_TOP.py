@@ -10,8 +10,8 @@ http://pandoricweb.tumblr.com/post/8646701677/python-implementation-of-the-k-mea
 import math
 import random
 import time
-from api import TOP_distance_Euclidean
-from api import TOP_calculate_distance
+from TOP_api.api import TOP_distance_Euclidean
+from TOP_api.api import TOP_calculate_distance
 
 def main():
     timeList = []

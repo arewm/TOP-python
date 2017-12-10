@@ -47,12 +47,14 @@ def compile_with_top(source_path, api_path):
 
     # Generate the api library package and copy it over
     from rope.contrib import generate
+    api_pkg = None
+    if api_root != source_root: # If the api is in its own module, reproduce it
+        try:
+            api_pkg = project_swap.root.get_child(api_module)
+        except ResourceNotFoundError:
+            api_pkg = generate.create_package(project_swap, api_module)
     try:
-        api_pkg = project_swap.root.get_child(api_module)
-    except ResourceNotFoundError:
-        api_pkg = generate.create_package(project_swap, api_module)
-    try:
-        mod_api = project_swap.root.get_child('test/{}'.format(api_name))
+        mod_api = project_swap.root.get_child('{}/{}'.format(api_module, api_name))
     except ResourceNotFoundError:
         mod_api = generate.create_module(project_swap, 'api', api_pkg)
     # copy over the contents of the api so that rope can modify it
@@ -69,6 +71,10 @@ def compile_with_top(source_path, api_path):
     api_calls = [a for a in dir(api) if isinstance(api.__dict__.get(a), types.FunctionType)]
     # perform the replacement
     for a in api_calls:
+        # We did not use this API call in the code, so skip replacing it
+        if re.search(r'\b{}\b'.format(a), mod_code.read()) is None:
+            continue
+        # print re.search(r'\b{}\b'.format(a), mod_code.read())
         ind = re.search(r'\b{}\b'.format(a), mod_code.read()).start()
         try:
             inl = inline.create_inline(project_swap, mod_code, ind)
