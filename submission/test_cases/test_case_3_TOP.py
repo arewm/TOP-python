@@ -10,8 +10,8 @@ http://pandoricweb.tumblr.com/post/8646701677/python-implementation-of-the-k-mea
 import math
 import random
 import time
-from TOP_api.api import TOP_distance_Euclidean
-from TOP_api.api import TOP_calculate_distance
+from api import TOP_distance_Euclidean
+from api import TOP_calculate_distance
 
 def main():
     timeList = []
@@ -30,7 +30,9 @@ def main():
         points = [
             makeRandomPoint(dimensions, lower, upper) for i in xrange(num_points)
         ]
-        clusters = kmeans(points, num_clusters, cutoff)
+        #print(points)
+        distance_=TOP_calculate_distance(points)
+        clusters = kmeans(points, num_clusters, cutoff,distance_)
         t2 = time.time()
         timeList.append(t2 - t1)
 
@@ -50,9 +52,20 @@ class Point(object):
         '''
         self.coords = coords
         self.n = len(coords)
+        self.len = len(coords)
+
 
     def __repr__(self):
         return str(self.coords)
+
+    def __len__(self):
+        return len(self.coords)
+
+    def __getitem__(self, index):
+        return self.coords[index]
+
+    def __setitem__(self, index, value):
+        self.coords = value
 
 class Cluster(object):
     '''
@@ -112,7 +125,7 @@ class Cluster(object):
 
         return Point(centroid_coords)
 
-def kmeans(points, k, cutoff):
+def kmeans(points, k, cutoff,distance_):
     initial = random.sample(points, k)
 
     # Create k clusters using those centroids
@@ -133,13 +146,15 @@ def kmeans(points, k, cutoff):
             # TODO: replace with TOP Call
             # old: smallest_distance = getDistance(p, clusters[0].centroid)
             smallest_distance = TOP_distance_Euclidean(p.coords, clusters[0].centroid.coords)
-
+            smallest_distance_ = TOP_distance_Euclidean(p.coords, clusters[0].centroid.coords)
             clusterIndex = 0
             for i in range(clusterCount - 1):
                 # calculate the distance of that point to each other cluster's
                 # centroid.
                 # TODO: replace with TOP function call
                 # old: distance = getDistance(p, clusters[i+1].centroid)
+
+              if(smallest_distance>distance_[i]):
                 distance = TOP_distance_Euclidean(p.coords, clusters[i+1].centroid.coords)
 
                 if distance < smallest_distance:
@@ -150,8 +165,10 @@ def kmeans(points, k, cutoff):
         biggest_shift = 0.0
         for i in range(clusterCount):
             # Calculate how far the centroid moved in this iteration
-            shift = clusters[i].update(lists[i])
-            biggest_shift = max(biggest_shift, shift)
+
+            if (lists[i]!=[]):
+             shift = clusters[i].update(lists[i])
+             biggest_shift = max(biggest_shift, shift)
 
         if biggest_shift < cutoff:
             print "Converged after %s iterations" % loopCounter
