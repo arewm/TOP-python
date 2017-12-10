@@ -105,7 +105,6 @@ class Cluster(object):
         old_centroid = self.centroid
         self.points = points
         self.centroid = self.calculateCentroid()
-        # TODO: Replace with TOP call
         # shift = getDistance(old_centroid, self.centroid)
         shift = TOP_distance_Euclidean(old_centroid.coords, self.centroid.coords)
         return shift
@@ -120,7 +119,6 @@ class Cluster(object):
         # Reformat that so all x's are together, all y'z etc.
         unzipped = zip(*coords)
         # Calculate the mean for each dimension
-        # TODO: Replace with TOP function, or not? its just mean
         centroid_coords = [math.fsum(dList)/numPoints for dList in unzipped]
 
         return Point(centroid_coords)
@@ -143,16 +141,12 @@ def kmeans(points, k, cutoff,distance_):
         # goes through every point and assigns closest centroid
         for p in points:
             # Get the distance between that point and the centroid of the first cluster.
-            # TODO: replace with TOP Call
-            # old: smallest_distance = getDistance(p, clusters[0].centroid)
             smallest_distance = TOP_distance_Euclidean(p.coords, clusters[0].centroid.coords)
             smallest_distance_ = TOP_distance_Euclidean(p.coords, clusters[0].centroid.coords)
             clusterIndex = 0
             for i in range(clusterCount - 1):
                 # calculate the distance of that point to each other cluster's
                 # centroid.
-                # TODO: replace with TOP function call
-                # old: distance = getDistance(p, clusters[i+1].centroid)
 
               if(smallest_distance>distance_[i]):
                 distance = TOP_distance_Euclidean(p.coords, clusters[i+1].centroid.coords)
@@ -174,19 +168,6 @@ def kmeans(points, k, cutoff,distance_):
             print "Converged after %s iterations" % loopCounter
             break
     return clusters
-
-# TODO: This will all be replaces by TOP calls
-def getDistance(a, b):
-    if a.n != b.n:
-        raise Exception("ERROR: non comparable points")
-
-    accumulatedDifference = 0.0
-    for i in range(a.n):
-        squareDifference = pow((a.coords[i]-b.coords[i]), 2)
-        accumulatedDifference += squareDifference
-    distance = math.sqrt(accumulatedDifference)
-
-    return distance
 
 def makeRandomPoint(n, lower, upper):
     p = Point([random.uniform(lower, upper) for _ in range(n)])
