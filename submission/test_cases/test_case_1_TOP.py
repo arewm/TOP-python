@@ -1,10 +1,10 @@
 """""
-Converted Test Case 1 for TOP 
-Point to Point - calculated the shortest distance between two points in a directed graph 
-Original Test Case picked from 
+Converted Test Case 1 for TOP
+Point to Point - calculated the shortest distance between two points in a directed graph
+Original Test Case picked from
 source: https://github.com/alexhwoods/alexhwoods.com/blob/master/Algorithms/Dijkstra/dijkstra.py
 author: Alex H Woods
-Djikstra implements Triangle Inequality 
+Djikstra implements Triangle Inequality
 """""
 
 # graph class inspired by https://gist.github.com/econchick/4666413
@@ -87,7 +87,6 @@ def shortest_path(graph, start, end):
     return path
 
 def main():
-    start_time =  time.time()
     G = Graph()
     G.add_vertex('a')
     G.add_vertex('b')
@@ -101,9 +100,18 @@ def main():
     G.add_edge('b', 'c', 1)
     G.add_edge('c', 'e', 3)
     G.add_edge('d', 'e', 4)
-    print("--- %s seconds ---" % ((time.time() - start_time)))
 
-    print(shortest_path(G, 'a', 'e'))
+    timeList = []
+    for i in range(1,200):
+        t1 = time.time()
+        print(shortest_path(G, 'a', 'e'))
+        t2 = time.time()
+        timeList.append(t2 - t1)
 
+    totalTime = 0
+    for times in timeList:
+        totalTime = totalTime + times
+    averageTime = totalTime / 200
+    print("average completion time: " + str(averageTime))
 
 main()

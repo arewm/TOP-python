@@ -1,9 +1,9 @@
 """""
-Test Case 1 for TOP 
-Point to Point - calculated the shortest distance between two points in a directed graph 
-Original Test Case picked from 
+Test Case 1 for TOP
+Point to Point - calculated the shortest distance between two points in a directed graph
+Original Test Case picked from
 original source: https://github.com/alexhwoods/alexhwoods.com/blob/master/Algorithms/Dijkstra/dijkstra.py
-Brute Force Algorithm implemented 
+Brute Force Algorithm implemented
 
 
 """""
@@ -13,6 +13,7 @@ import math
 import time
 from api import TOP_distance_Euclidean # Adding TOP function
 from api import TOP_defDistance
+
 class Graph:
     def __init__(self):
         self.vertices = set()
@@ -68,20 +69,7 @@ def shortest_path(graph, start, end,path=[],weight=0):
 
     return min(weights)
 
-
-
-          #print("found")
-          #if (node not in path ):
-           # newpath = shortest_path(graph, node, end, path,weight)
-           # if (weights.has_key((node,end))):
-           #    weight=weight+weights[node,end]
-          #  if newpath:
-           #     if not shortest or len(newpath) < len(shortest):
-           #         shortest = newpath
-
-
 def main():
-    start_time =  time.time()
     G = Graph()
     G.add_vertex('a')
     G.add_vertex('b')
@@ -95,10 +83,18 @@ def main():
     G.add_edge('b', 'c', 1)
     G.add_edge('c', 'e', 3)
     G.add_edge('d', 'e', 4)
-    print("--- %s seconds ---" % ((time.time() - start_time)))
-    #print(G)
-    print(shortest_path(G, 'a', 'e'))
 
+    timeList = []
+    for i in range(1,200):
+        t1 = time.time()
+        print(shortest_path(G, 'a', 'e'))
+        t2 = time.time()
+        timeList.append(t2 - t1)
 
+    totalTime = 0
+    for times in timeList:
+        totalTime = totalTime + times
+    averageTime = totalTime / 200
+    print("average completion time: " + str(averageTime))
 
 main()
