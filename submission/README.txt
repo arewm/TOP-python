@@ -133,7 +133,7 @@ TEST CASE
 
 #########
 
-To execute the test case, from the current directory, use the command:
+To execute the test case, from the root directory, use the command:
     python compile_top.py top_compiler/tester.py --library top_compiler/test_api/api.py
 
 This will create a `top_compiled` folder within `top_compiler` containing the compiled tester.py file.
@@ -142,4 +142,4 @@ To test compiling other test cases than our example "tester.py" simply replace "
 
 A faster simpler way of testing the test cases without compiling is to navigate to the "/test_cases" directory and simply run the cases using Python as:
     python test_case_X.py
-... where X is replaced with the specific test case you wish to run. 
+... where X is replaced with the specific test case you wish to run.
