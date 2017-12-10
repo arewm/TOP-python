@@ -10,8 +10,8 @@ http://pandoricweb.tumblr.com/post/8646701677/python-implementation-of-the-k-mea
 import math
 import random
 import time
-from api import TOP_distance_Euclidean
-from api import TOP_calculate_distance
+from TOP_api.api import TOP_distance_Euclidean
+from TOP_api.api import TOP_calculate_distance
 
 def main():
     timeList = []
@@ -31,7 +31,7 @@ def main():
             makeRandomPoint(dimensions, lower, upper) for i in xrange(num_points)
         ]
         #print(points)
-        distance_=TOP_calculate_distance(points)
+        distance_ = TOP_calculate_distance(points)
         clusters = kmeans(points, num_clusters, cutoff,distance_)
         t2 = time.time()
         timeList.append(t2 - t1)
